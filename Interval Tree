@@ -62,6 +62,8 @@ ITNode *delet(ITNode *ptr, Interval i)
              ptr->left= delet(ptr->left,i);
              if(ptr->left!=NULL&&ptr->right!=NULL)
                 ptr->max=mx(ptr->left->max,ptr->i->high,ptr->right->max);
+                  else if(ptr->left==NULL&&ptr->right==NULL)
+                      ptr->max=ptr->i->high;
             else if(ptr->left==NULL)
                  ptr->max=mx(-1,ptr->i->high,ptr->right->max);
             else if(ptr->right==NULL)
@@ -75,6 +77,8 @@ ITNode *delet(ITNode *ptr, Interval i)
                   ptr->right=delet(ptr->right,i);
                   if(ptr->left!=NULL&&ptr->right!=NULL)
                 ptr->max=mx(ptr->left->max,ptr->i->high,ptr->right->max);
+                else if(ptr->left==NULL&&ptr->right==NULL)
+                      ptr->max=ptr->i->high;
             else if(ptr->left==NULL)
                  ptr->max=mx(-1,ptr->i->high,ptr->right->max);
             else if(ptr->right==NULL)
@@ -169,11 +173,11 @@ int main()
 	ITNode *root = NULL;
 	for (int i = 0; i < n; i++)
 		root = insert(root, ints[i]);
-		int flag=1;
+		int flag=1,cnt=5;
 	 while(flag)
      {
          int press;
-	cout<<"what do you want search or delete or exit ...if delete press 1,  press 2 for search ...3 for exit \n";
+	cout<<"what do you want search or delete or exit ...if delete press 1,  press 2 for search ,press 3 for insert...4 for exit \n";
 	cin>>press;
 	if(press==1)
        {  int num;
@@ -202,6 +206,15 @@ int main()
 	else
 		cout << "\nOverlaps with [" << res->low << ", " << res->high << "]";
 	}
+   else if(press==3)
+   {
+       cout<<"write extra interval to insert";
+        int a, b;
+        cin>>a>>b;
+        ints[++cnt]={a,b};
+        insert(root,ints[cnt]);
+        inorder(root);
+   }
 	else flag=0;
      }
 	return 0;
